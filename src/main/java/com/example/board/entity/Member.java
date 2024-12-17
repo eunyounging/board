@@ -1,12 +1,17 @@
 package com.example.board.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -23,6 +28,9 @@ public class Member extends BaseEntity {
     private String password;
 
     private Integer age;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
 
     public Member() {
     }

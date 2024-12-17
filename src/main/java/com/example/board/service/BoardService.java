@@ -8,12 +8,18 @@ import com.example.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
+
+    public List<Board> getBoardsByMemberId(Long memberId) {
+        return boardRepository.findByMemberId(memberId);
+    }
 
     public BoardResponseDto save(String title, String contents, String username) {
 
