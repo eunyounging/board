@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,9 +26,17 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/member/{memberId}")
-    public ResponseEntity<List<Board>> getBoardsByMemberId(@PathVariable Long memberId) {
+    public ResponseEntity<List<BoardResponseDto>> getBoardsByMemberId(@PathVariable Long memberId) {
+
         List<Board> boards = boardService.getBoardsByMemberId(memberId);
-        return new ResponseEntity<>(boards, HttpStatus.OK);
+
+        List<BoardResponseDto> boardResponseDtos = boards.stream().map(board -> new BoardResponseDto(
+                board.getId(),
+                board.getMember().getUsername(),
+                board.getContents()))
+                .toList();
+
+        return new ResponseEntity<>(boardResponseDtos, HttpStatus.OK);
     }
 
     @PostMapping
