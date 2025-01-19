@@ -1,6 +1,7 @@
 package com.example.board.controller;
 
 import com.example.board.dto.BoardResponseDto;
+import com.example.board.dto.BoardWithAgeResponseDto;
 import com.example.board.dto.CreateBoardRequestDto;
 import com.example.board.entity.Board;
 import com.example.board.service.BoardService;
@@ -47,4 +48,19 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDto, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<BoardResponseDto>> findAll() {
+
+        List<BoardResponseDto> boardResponseDtoList = boardService.findAll();
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardWithAgeResponseDto> findByID(@PathVariable Long id) {
+
+        BoardWithAgeResponseDto boardWithAgeResponseDto = boardService.findById(id);
+
+        return new ResponseEntity<>(boardWithAgeResponseDto, HttpStatus.OK);
+    }
 }
